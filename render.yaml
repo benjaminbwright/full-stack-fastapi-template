@@ -16,13 +16,15 @@ services:
   # Frontend static site
   - type: web
     name: frontend-app
-    env: static
+    env: node
     rootDir: frontend
-    buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
+    buildCommand: |
+      npm install
+      npm run build
+    staticPublishPath: dist
     envVars:
       - key: NODE_VERSION
-        value: 20.0.0
+        value: 20
     routes:
       - type: rewrite
         source: /*
