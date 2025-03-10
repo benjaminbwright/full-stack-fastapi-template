@@ -1,13 +1,18 @@
-# Stage 1: Build the Vite application
+# Build stage
 FROM node:20 AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
 RUN npm run build
+RUN ls -lah /app/dist  # Debugging: Check if dist exists
 
-# Stage 2: Serve with Nginx
+# Production stage
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
-EXPOSE 80
+COPY nginx.conf /etc/nginx/nginx.conf
+RUN ls -lah /usr/share/nginx/html  # Debugging: Check if HTML files copied
+RUN ls -lah /etc/nginx/nginx.conf  # Debugging: Check if nginx.conf copied
+RUN nginx -t                      # Debugging: Check Nginx config issues
+EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
