@@ -1,43 +1,61 @@
-# FastAPI Project Template
+# Full-Stack FastAPI and React Template
 
-A modern, production-ready template for building APIs with Python 3.8+ using FastAPI. This template provides a modular structure and includes a TODO list CRUD example to demonstrate best practices.
+A modern, production-ready template for building full-stack applications with FastAPI and React. This template provides a modular structure with Docker support for both development and production environments.
 
 ## Features
 
-- 🚀 FastAPI for high-performance API development
-- 📁 Modular project structure
+- 🚀 FastAPI backend for high-performance API development
+- ⚛️ React frontend with modern tooling
+- 🐳 Docker and Docker Compose support for development
+- 📦 Separate production-ready Dockerfiles for cloud deployment
+- 📁 Modular project structure for both frontend and backend
 - 🔍 Example TODO list CRUD implementation
 - 📝 Auto-generated API documentation (Swagger/OpenAPI)
 - ✨ Clean, maintainable architecture
-- 🔒 Type safety with Pydantic models
+- 🔒 Type safety with Pydantic models and TypeScript
 
-## Quick Start
+## Quick Start with Docker (Development)
 
 ### Prerequisites
 
-- Python 3.8 or higher
-- pip (Python package installer)
+- Docker
+- Docker Compose
 
-### Setup
+### Development Setup
 
 1. Clone the template:
 
    ```bash
-   git clone https://github.com/yourusername/fastapi-template.git
-   cd fastapi-template
+   git clone https://github.com/yourusername/full-stack-fastapi-template.git
+   cd full-stack-fastapi-template
+   ```
+
+2. Start the development environment:
+
+   ```bash
+   docker-compose up
+   ```
+
+3. Access the applications:
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:8000
+   - API Documentation: http://localhost:8000/docs
+
+## Manual Setup (Without Docker)
+
+### Backend Setup
+
+1. Navigate to the backend directory:
+
+   ```bash
+   cd backend
    ```
 
 2. Create and activate virtual environment:
 
    ```bash
-   # Create virtual environment
    python -m venv venv
-
-   # Windows
-   .\venv\Scripts\activate
-
-   # macOS/Linux
-   source venv/bin/activate
+   source venv/bin/activate  # On Windows: .\venv\Scripts\activate
    ```
 
 3. Install dependencies:
@@ -46,81 +64,111 @@ A modern, production-ready template for building APIs with Python 3.8+ using Fas
    pip install -r requirements.txt
    ```
 
-4. Run the application:
-
+4. Run the backend:
    ```bash
-   python main.py
+   uvicorn main:app --reload
    ```
 
-5. Open http://localhost:8000/docs to view the API documentation
+### Frontend Setup
+
+1. Navigate to the frontend directory:
+
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
 ## Project Structure
 
-fastapi-template/
-├── main.py # Application entry point
-├── requirements.txt # Project dependencies
-├── models/ # Data models
-│ └── todo.py # TODO models
-└── routes/ # API routes
-└── todo_routes.py # TODO endpoints
+```
+full-stack-fastapi-template/
+├── docker-compose.yml          # Development Docker Compose configuration
+├── backend/
+│   ├── Dockerfile             # Production backend Dockerfile
+│   ├── Dockerfile.development # Development backend Dockerfile
+│   ├── main.py               # Application entry point
+│   ├── requirements.txt      # Python dependencies
+│   ├── models/               # Data models
+│   └── routes/               # API routes
+├── frontend/
+│   ├── Dockerfile           # Production frontend Dockerfile
+│   ├── Dockerfile.development # Development frontend Dockerfile
+│   ├── package.json
+│   ├── src/
+│   │   ├── components/      # React components
+│   │   ├── pages/          # Page components
+│   │   └── services/       # API services
+│   └── public/             # Static assets
+```
+
+## Production Deployment
+
+The template includes separate Dockerfiles for production deployment of both frontend and backend services. This allows for independent scaling and deployment of each service in cloud environments.
+
+### Building Production Images
+
+1. Backend:
+
+   ```bash
+   docker build -t myapp-backend ./backend
+   ```
+
+2. Frontend:
+   ```bash
+   docker build -t myapp-frontend ./frontend
+   ```
+
+### Environment Variables
+
+- Backend:
+
+  - `DATABASE_URL`: Database connection string
+  - `SECRET_KEY`: Application secret key
+  - Additional environment variables as needed
+
+- Frontend:
+  - `REACT_APP_API_URL`: Backend API URL
+  - Additional environment variables as needed
 
 ## API Endpoints
 
 The template includes a complete TODO list API:
 
-- `GET /todos` - List all todos
-- `POST /todos` - Create a todo
-- `GET /todos/{id}` - Get a specific todo
-- `PUT /todos/{id}` - Update a todo
-- `DELETE /todos/{id}` - Delete a todo
+- `GET /api/todos` - List all todos
+- `POST /api/todos` - Create a todo
+- `GET /api/todos/{id}` - Get a specific todo
+- `PUT /api/todos/{id}` - Update a todo
+- `DELETE /api/todos/{id}` - Delete a todo
 
 ## Contributing
 
-We welcome contributions! Here's how to contribute to this project:
+We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-### Making Changes
+## Development Guidelines
 
-1. Fork the repository
-2. Create a feature branch:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. Make your changes
-4. Test your changes
-5. Commit with clear messages:
-   ```bash
-   git commit -m "feat: add new feature"
-   ```
-
-### Submitting a Pull Request
-
-1. Push to your fork:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-2. Go to the original repository and create a Pull Request
-3. Fill in the PR template with:
-   - Description of changes
-   - Related issue(s)
-   - Testing performed
-   - Screenshots (if applicable)
-
-### Pull Request Guidelines
-
-- Follow existing code style
-- Add tests for new features
-- Update documentation
-- One feature per PR
-- Keep PRs focused and manageable in size
-
-## Development
-
-### Code Style
+### Backend
 
 - Follow PEP 8 guidelines
 - Use type hints
 - Write docstrings for functions and classes
-- Keep functions focused and single-purpose
+- Implement unit tests for new features
+
+### Frontend
+
+- Follow React best practices
+- Use TypeScript for type safety
+- Implement component tests
+- Follow the established project structure
 
 ## License
 
@@ -129,5 +177,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Getting Help
 
 - Check the [FastAPI documentation](https://fastapi.tiangolo.com/)
+- Visit the [React documentation](https://reactjs.org/)
 - Open an issue for bugs
 - Start a discussion for questions
