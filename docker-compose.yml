@@ -2,20 +2,22 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
-      target: production
-    volumes:
-      - ./backend:/app
+      dockerfile: Dockerfile.development
     ports:
       - "8000:8000"
-    environment:
-      - FASTAPI_ENV=development
+    volumes:
+      - ./backend:/app
 
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.development
     ports:
-      - "80:80"
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
     depends_on:
       - backend
