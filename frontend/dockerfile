@@ -11,8 +11,5 @@ RUN ls -lah /app/dist  # Debugging: Check if dist exists
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
-RUN ls -lah /usr/share/nginx/html  # Debugging: Check if HTML files copied
-RUN ls -lah /etc/nginx/nginx.conf  # Debugging: Check if nginx.conf copied
-RUN nginx -t                      # Debugging: Check Nginx config issues
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
